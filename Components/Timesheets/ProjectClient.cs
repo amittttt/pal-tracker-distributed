@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Timesheets
 {
-    public class ProjectClient : IProjectClient
+   public class ProjectClient : IProjectClient
     {
         private readonly HttpClient _client;
         private readonly ILogger<ProjectClient> _logger;
