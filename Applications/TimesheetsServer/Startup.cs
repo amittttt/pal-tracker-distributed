@@ -9,6 +9,8 @@ using Steeltoe.CloudFoundry.Connector.MySql.EFCore;
 using Timesheets;
 using Steeltoe.CircuitBreaker.Hystrix;
 
+using Pivotal.Discovery.Client;
+using Steeltoe.Common.Discovery;
 
 namespace TimesheetsServer
 {
@@ -32,7 +34,8 @@ namespace TimesheetsServer
             
             services.AddSingleton<IProjectClient>(sp =>
             {
-                var httpClient = new HttpClient
+                var handler = new DiscoveryHttpClientHandler(sp.GetService<IDiscoveryClient>());
+                var httpClient = new HttpClient(handler, false)
                 {
                     BaseAddress = new Uri(Configuration.GetValue<string>("REGISTRATION_SERVER_ENDPOINT"))
                 };
@@ -42,6 +45,7 @@ namespace TimesheetsServer
                 return new ProjectClient(httpClient, logger);
             });
             services.AddHystrixMetricsStream(Configuration);
+            services.AddDiscoveryClient(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +57,7 @@ namespace TimesheetsServer
             app.UseMvc();
             app.UseHystrixMetricsStream();
              app.UseHystrixRequestContext();
+            app.UseDiscoveryClient();
         }
     }
 }
