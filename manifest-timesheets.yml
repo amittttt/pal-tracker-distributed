@@ -10,3 +10,5 @@ applications:
     REGISTRATION_SERVER_ENDPOINT: http://FILL_ME_IN/
   services:
   - tracker-timesheets-database
+   - tracker-circuit-breaker-dashboard
+  - tracker-amqp
