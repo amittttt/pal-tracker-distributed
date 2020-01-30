@@ -44,8 +44,9 @@ namespace TimesheetsServer
                 var logger = sp.GetService<ILogger<ProjectClient>>();
                 return new ProjectClient(httpClient, logger);
             });
-            services.AddHystrixMetricsStream(Configuration);
             services.AddDiscoveryClient(Configuration);
+            services.AddHystrixMetricsStream(Configuration);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,9 +56,10 @@ namespace TimesheetsServer
             loggerFactory.AddDebug();
 
             app.UseMvc();
-            app.UseHystrixMetricsStream();
-             app.UseHystrixRequestContext();
             app.UseDiscoveryClient();
+            app.UseHystrixMetricsStream();
+            app.UseHystrixRequestContext();
+           
         }
     }
 }

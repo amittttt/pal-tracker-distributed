@@ -43,8 +43,9 @@ namespace BacklogServer
                var logger = sp.GetService<ILogger<ProjectClient>>();
                return new ProjectClient(httpClient, logger);
             });
-            services.AddHystrixMetricsStream(Configuration);
             services.AddDiscoveryClient(Configuration);
+            services.AddHystrixMetricsStream(Configuration);
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,9 +55,10 @@ namespace BacklogServer
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseDiscoveryClient();
             app.UseHystrixMetricsStream();
             app.UseHystrixRequestContext();
-            app.UseDiscoveryClient();
+            
         }
     }
 }
