@@ -60,6 +60,6 @@ namespace TimesheetsServer
             app.UseHystrixMetricsStream();
             app.UseHystrixRequestContext();
            
-        }
+        }  
     }
 }
