@@ -7,9 +7,10 @@ applications:
   - route: pal-tracker-dis-timesheets-prod.cfapps.io
   path: Applications/TimesheetsServer/bin/Release/netcoreapp2.1/publish
   env:
-    #REGISTRATION_SERVER_ENDPOINT: http://pal-tracker-dis-registration-prod.cfapps.io
+    GRANT_TYPE: client_credentials
   services:
   - tracker-timesheets-database
   - tracker-circuit-breaker-dashboard
   - tracker-amqp
   - tracker-service-registry
+  - tracker-sso
